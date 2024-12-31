@@ -3,6 +3,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; // Import Slick CSS
 import "slick-carousel/slick/slick-theme.css"; // Import Slick Theme CSS
 import nftImage from "../../images/nftImage.jpg"; // Assuming you have a local fallback image
+import authImage from "../../images/author_banner.jpg";
+import thumbnail from "../../images/author_thumbnail.jpg";
+import shape from "../../images/bg-shape-1.jpg";
 
 export default function HotCollections() {
   const [hotCollections, setHotCollections] = useState([]); // State to store the collections data
@@ -105,14 +108,13 @@ export default function HotCollections() {
         →
       </div>
 
-      {/* Slider */}
       <Slider ref={sliderRef} {...settings}>
         {hotCollections.length > 0 ? (
-          hotCollections.map((collection, index) => (
+          hotCollections.map((collection) => (
             <div
-              key={index}
+              key={collection.id} // Use unique ID for the key
               style={{
-                padding: "10px",
+                padding: "50px",
                 display: "flex",
                 flexDirection: "column",
                 marginRight: "15px", // Add a gap between slides
@@ -120,22 +122,26 @@ export default function HotCollections() {
             >
               <div className="nft_coll_wrap" style={{ width: "100%", height: "auto" }}>
                 <img
-                  src={collection.image || nftImage} // Fallback image if no image is available
-                  alt={collection.name}
+                  src={collection.nftImage || nftImage} // Fallback image if no image is available
+                  alt={collection.name || nftImage}
                   style={{
                     width: "100%",
+                    padding:"10px",
                     height: "auto",
-                    borderRadius: "10px",
+                    borderRadius: "25px",
                     objectFit: "cover", // Ensures the image covers the container
-                    marginBottom: "20px", // Optional: adds space between image and text
+                    marginBottom: "10px", // Optional: adds space between image and text
+                    marginLeft:"10px",
                   }}
                 />
               </div>
               <div className="nft_coll_info" style={{ textAlign: "center", marginTop: "10px" }}>
-                <h4 style={{ fontSize: "18px", color: "#333" }}>{collection.name}</h4>
+                <h4 style={{ fontSize: "18px", color: "#333", }}>{collection.name}</h4>
+                <img src={authImage} style={{height:"300px", width:"300px"}}alt="" />
+                <img src={thumbnail}></img>
+                <img src={shape} alt="" />
                 <span style={{ fontSize: "14px", color: "#777" }}>
-                  {/* Dynamically display the token ID */}
-                  Token ID: {collection.tokenId || "N/A"}
+                  {collection.tokenId || "ERC-192"}
                 </span>
               </div>
             </div>
