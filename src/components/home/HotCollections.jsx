@@ -1,155 +1,147 @@
-import React, { useEffect, useState, useRef } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; // Import Slick CSS
-import "slick-carousel/slick/slick-theme.css"; // Import Slick Theme CSS
-import nftImage from "../../images/nftImage.jpg"; // Assuming you have a local fallback image
-import authImage from "../../images/author_banner.jpg";
-import thumbnail from "../../images/author_thumbnail.jpg";
-import shape from "../../images/bg-shape-1.jpg";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import AuthorImage from "../../images/author_thumbnail.jpg";
+import nftImage from "../../images/nftImage.jpg";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 
-export default function HotCollections() {
-  const [hotCollections, setHotCollections] = useState([]); // State to store the collections data
-  const sliderRef = useRef(null); // Ref to access Slider methods
+const HotCollections = () => {
+  const [hotCollections, setHotCollections] = useState([]);
 
-  // Fetch data from the API
+  const [sliderRef, instanceRef] = useKeenSlider({
+    loop: true,
+    breakpoints: {
+      "(min-width: 1200px)": {
+        slides: 4,
+      },
+      "(min-width: 768px)": {
+        slides: 3,
+      },
+      "(min-width: 400px)": {
+        slides: 2,
+      },
+      "(max-width: 400px)": {
+        slides: 1,
+      },
+    },
+  });
+
   useEffect(() => {
     fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections")
       .then((response) => response.json())
-      .then((data) => {
-        console.log("API Data:", data); // Log the fetched data
-        setHotCollections(data); // Set the data to state
-      })
-      .catch((error) => console.error("Error fetching data: ", error)); // Handle errors
+      .then((data) => setHotCollections(data))
+      .catch((error) => console.error("Error fetching data: ", error));
   }, []);
 
-  // Slider settings for React Slick
-  const settings = {
-    dots: true, // Enable dots for navigation
-    infinite: true, // Loop the carousel
-    speed: 500, // Transition speed
-    slidesToShow: 4, // Show 4 items at a time
-    slidesToScroll: 1, // Scroll 1 item at a time
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-
-  // Handle next and prev actions for custom arrows
-  const handlePrev = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickPrev(); // Call slickPrev method to go to the previous slide
+  useEffect(() => {
+    if (instanceRef.current && hotCollections.length > 0) {
+      instanceRef.current.update();
     }
-  };
-
-  const handleNext = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickNext(); // Call slickNext method to go to the next slide
-    }
-  };
+  }, [hotCollections, instanceRef]);
 
   return (
-    <div style={{ maxWidth: "900px", margin: "auto", position: "relative" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Hot Collections</h2>
-
-      {/* Custom Previous Arrow */}
-      <div
-        onClick={handlePrev}
-        style={{
-          position: "absolute",
-          left: "-50px",
-          top: "50%",
-          transform: "translate(0, -50%)", // Center the arrow vertically
-          backgroundColor: "rgba(0, 0, 0, 0.8)", // Darker background for contrast
-          color: "white", // White arrow color for contrast
-          fontSize: "30px", // Increase the size of the arrows
-          padding: "10px",
-          borderRadius: "50%", // Circular button
-          cursor: "pointer",
-          zIndex: 10, // Ensure the arrow stays above other elements
-        }}
-      >
-        ←
-      </div>
-
-      {/* Custom Next Arrow */}
-      <div
-        onClick={handleNext}
-        style={{
-          position: "absolute",
-          right: "-50px",
-          top: "50%",
-          transform: "translate(0, -50%)", // Center the arrow vertically
-          backgroundColor: "rgba(0, 0, 0, 0.8)", // Darker background for contrast
-          color: "white", // White arrow color for contrast
-          fontSize: "30px", // Increase the size of the arrows
-          padding: "10px",
-          borderRadius: "50%", // Circular button
-          cursor: "pointer",
-          zIndex: 10, // Ensure the arrow stays above other elements
-        }}
-      >
-        →
-      </div>
-
-      <Slider ref={sliderRef} {...settings}>
-        {hotCollections.length > 0 ? (
-          hotCollections.map((collection) => (
+    <section id="section-collections" className="no-bottom">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="text-center">
+              <h2>Hot Collections</h2>
+              <div className="small-border bg-color-2"></div>
+            </div>
+          </div>
+          <div className="keen-slider-wrapper row" style={{ position: "relative" }}>
             <div
-              key={collection.id} // Use unique ID for the key
+              ref={sliderRef}
+              className="keen-slider"
+              style={{ display: "flex", overflow: "hidden" }}
+            >
+              {hotCollections.length > 0 ? (
+                hotCollections.map((collection) => (
+                  <div className="keen-slider__slide" key={collection.id}>
+                    <div className="nft_coll">
+                      <div className="nft_wrap">
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage || nftImage}
+                            className="lazy img-fluid"
+                            alt={collection.name}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              borderRadius: "15px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp">
+                        <Link to="/author">
+                          <img className="lazy pp-coll" src={AuthorImage} alt="" />
+                        </Link>
+                        <i className="fa fa-check"></i>
+                      </div>
+                      <div className="nft_coll_info">
+                        <Link to="/explore">
+                          <h4>{collection.name}</h4>
+                        </Link>
+                        <span>{collection.tokenId || "No Token ID"}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>Loading collections...</p>
+              )}
+            </div>
+
+            {/* Left Arrow */}
+            <button
+              className="keen-slider-prev"
+              onClick={() => instanceRef.current?.prev()}
               style={{
-                padding: "50px",
-                display: "flex",
-                flexDirection: "column",
-                marginRight: "15px", // Add a gap between slides
+                position: "absolute",
+                top: "50%",
+                left: "-20px",
+                transform: "translateY(-50%)",
+                background: "rgba(0, 0, 0, 0.5)",
+                width:"30px",
+                height:"40px",
+                color: "white",
+                border: "none",
+                padding: "20px",
+                cursor: "pointer",
+                zIndex: 10,
               }}
             >
-              <div className="nft_coll_wrap" style={{ width: "100%", height: "auto" }}>
-                <img
-                  src={collection.nftImage || nftImage} // Fallback image if no image is available
-                  alt={collection.name || nftImage}
-                  style={{
-                    width: "100%",
-                    padding:"10px",
-                    height: "auto",
-                    borderRadius: "25px",
-                    objectFit: "cover", // Ensures the image covers the container
-                    marginBottom: "10px", // Optional: adds space between image and text
-                    marginLeft:"10px",
-                  }}
-                />
-              </div>
-              <div className="nft_coll_info" style={{ textAlign: "center", marginTop: "10px" }}>
-                <h4 style={{ fontSize: "18px", color: "#333", }}>{collection.name}</h4>
-                <img src={authImage} style={{height:"300px", width:"300px"}}alt="" />
-                <img src={thumbnail}></img>
-                <img src={shape} alt="" />
-                <span style={{ fontSize: "14px", color: "#777" }}>
-                  {collection.tokenId || "ERC-192"}
-                </span>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>Loading collections...</p> // Display loading message while fetching data
-        )}
-      </Slider>
-    </div>
+              ←
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              className="keen-slider-next"
+              onClick={() => instanceRef.current?.next()}
+              style={{
+                position: "absolute",
+                top: "50%",
+                right: "0px",
+                transform: "translateY(-50%)",
+                background: "black",
+                color: "white",
+                width:"40px",
+                border: "none",
+                padding: "20px",
+                borderRadius:"25%",
+                cursor: "pointer",
+                zIndex: 10,
+              }}
+            >
+              →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   );
-}
+};
+
+export default HotCollections;
