@@ -4,6 +4,7 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import banner from "../../images/author_banner.jpg";
 
 const HotCollections = () => {
   const [hotCollections, setHotCollections] = useState([]);
@@ -59,32 +60,210 @@ const HotCollections = () => {
                 hotCollections.map((collection) => (
                   <div className="keen-slider__slide" key={collection.id}>
                     <div className="nft_coll">
-                      <div className="nft_wrap">
+                      <div className="nft_wrap"
+                      style={{width:"60%", height:"100%", position:"relative"}}
+                      >
                         <Link to="/item-details">
                           <img
                             src={collection.nftImage || nftImage}
                             className="lazy img-fluid"
                             alt={collection.name}
                             style={{
-                              width: "100%",
+                              width: "50%",
                               height: "100%",
-                              borderRadius: "15px",
+                              borderRadius:"25px",
+                              position:"relative",
+                              padding:"2px",
                               objectFit: "cover",
                             }}
                           />
                         </Link>
                       </div>
-                      <div className="nft_coll_pp">
+                      <div className="nft_coll_pp"
+                      style={{width:"100px", height:"100px", position:"relative",
+                        right:"20%"
+                      
+                      }}>
                         <Link to="/author">
-                          <img className="lazy pp-coll" src={AuthorImage} alt="" />
+                          <img className="lazy pp-coll" 
+                          src={AuthorImage}
+                          style={{width:"100%", height:"auto"}}/>                       
                         </Link>
-                        <i className="fa fa-check"></i>
+                        <i className="fa fa-check">
+                        </i>
                       </div>
-                      <div className="nft_coll_info">
+                      <div className="nft_coll_info"
+                      style={{position:"relative", right:"20%",
+                      }}>
                         <Link to="/explore">
-                          <h4>{collection.name}</h4>
+                          <h4>{collection.name}
+                          </h4>
                         </Link>
-                        <span>{collection.tokenId || "No Token ID"}</span>
+                        <span>{collection.tokenId || "Abstraction"}</span>
+                      </div>
+                      <div className="nft_wrap"
+                      style={{width:"60%", height:"100%", position:"relative",}}
+                      >
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage || nftImage}
+                            className="lazy img-fluid"
+                            alt={collection.name}
+                            style={{
+                              width: "50%",
+                              height: "100%",
+                              borderRadius:"25px",
+                              position:"relative",
+                              padding:"2px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp"
+                      style={{width:"100px", height:"100px", position:"relative",
+                        right:"20%"
+                      
+                      }}>
+                        <Link to="/author">
+                          <img className="lazy pp-coll" 
+                          src={AuthorImage}
+                          style={{width:"100%", height:"auto"}}/>                       
+                        </Link>
+                        <i className="fa fa-check">
+                        </i>
+                      </div>
+                      <div className="nft_coll_info"
+                      style={{position:"relative", right:"20%",
+                      }}>
+                        <Link to="/explore">
+                          <h4>{collection.name}
+                          </h4>
+                        </Link>
+                        <span>{collection.tokenId || "Abstraction"}</span>
+                      </div>
+                      <div className="nft_wrap"
+                      style={{width:"60%", height:"100%", position:"relative",}}
+                      >
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage || nftImage}
+                            className="lazy img-fluid"
+                            alt={collection.name}
+                            style={{
+                              width: "50%",
+                              height: "100%",
+                              borderRadius:"25px",
+                              position:"relative",
+                              padding:"2px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp"
+                      style={{width:"100px", height:"100px", position:"relative",
+                        right:"20%"
+                      
+                      }}>
+                        <Link to="/author">
+                          <img className="lazy pp-coll" 
+                          src={AuthorImage}
+                          style={{width:"100%", height:"auto"}}/>                       
+                        </Link>
+                        <i className="fa fa-check">
+                        </i>
+                      </div>
+                      <div className="nft_coll_info"
+                      style={{position:"relative", right:"20%",
+                      }}>
+                        <Link to="/explore">
+                          <h4>{collection.name}
+                          </h4>
+                        </Link>
+                        <span>{collection.tokenId || "Abstraction"}</span>
+                      </div>
+                      <div className="nft_wrap"
+                      style={{width:"60%", height:"100%", position:"relative",}}
+                      >
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage || nftImage}
+                            className="lazy img-fluid"
+                            alt={collection.name}
+                            style={{
+                              width: "50%",
+                              height: "100%",
+                              borderRadius:"25px",
+                              position:"relative",
+                              padding:"2px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp"
+                      style={{width:"100px", height:"100px", position:"relative",
+                        right:"20%"
+                      
+                      }}>
+                        <Link to="/author">
+                          <img className="lazy pp-coll" 
+                          src={AuthorImage}
+                          style={{width:"100%", height:"auto"}}/>                       
+                        </Link>
+                        <i className="fa fa-check">
+                        </i>
+                      </div>
+                      <div className="nft_coll_info"
+                      style={{position:"relative", right:"20%",
+                      }}>
+                        <Link to="/explore">
+                          <h4>{collection.name}
+                          </h4>
+                        </Link>
+                        <span>{collection.tokenId || "Abstraction"}</span>
+                      </div>
+                      <div className="nft_wrap"
+                      style={{width:"60%", height:"100%", position:"relative",}}
+                      >
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage || nftImage}
+                            className="lazy img-fluid"
+                            alt={collection.name}
+                            style={{
+                              width: "50%",
+                              height: "100%",
+                              borderRadius:"25px",
+                              position:"relative",
+                              padding:"2px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp"
+                      style={{width:"100px", height:"100px", position:"relative",
+                        right:"20%"
+                      
+                      }}>
+                        <Link to="/author">
+                          <img className="lazy pp-coll" 
+                          src={AuthorImage}
+                          style={{width:"100%", height:"auto"}}/>                       
+                        </Link>
+                        <i className="fa fa-check">
+                        </i>
+                      </div>
+                      <div className="nft_coll_info"
+                      style={{position:"relative", right:"20%",
+                      }}>
+                        <Link to="/explore">
+                          <h4>{collection.name}
+                          </h4>
+                        </Link>
+                        <span>{collection.tokenId || "Abstraction"}</span>
                       </div>
                     </div>
                   </div>
@@ -103,9 +282,10 @@ const HotCollections = () => {
                 top: "50%",
                 left: "-20px",
                 transform: "translateY(-50%)",
-                background: "rgba(0, 0, 0, 0.5)",
-                width:"30px",
-                height:"40px",
+                background: "black",
+                borderRadius:"25%",
+                width:"50px",
+                height:"100px",
                 color: "white",
                 border: "none",
                 padding: "20px",
@@ -123,13 +303,13 @@ const HotCollections = () => {
               style={{
                 position: "absolute",
                 top: "50%",
-                right: "0px",
+                right: "-40px",
                 transform: "translateY(-50%)",
                 background: "black",
                 color: "white",
-                width:"40px",
+                width:"50px",
                 border: "none",
-                padding: "20px",
+                padding: "30px",
                 borderRadius:"25%",
                 cursor: "pointer",
                 zIndex: 10,
