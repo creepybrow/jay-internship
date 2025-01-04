@@ -53,7 +53,9 @@ const ItemDetails = () => {
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">Monica Lucas</Link>
+                          <Link to="/author">
+                          <img src={AuthorImage}></img>
+                          Monica Lucas</Link>
                         </div>
                       </div>
                     </div>
@@ -65,19 +67,19 @@ const ItemDetails = () => {
                       <div className="item_author">
                         <div className="author_list_pp">
                           <Link to="/author">
-                            <img className="lazy" src={AuthorImage} alt="" />
+                            <img className="lazy" src={nftImage.AuthorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
-                        <div className="author_list_info">
-                          <Link to="/author">Monica Lucas</Link>
+                        <div className="author_list_info col">
+                          <Link to="/author">{AuthorImage.name}</Link>
                         </div>
                       </div>
                     </div>
                     <div className="spacer-40"></div>
-                    <h6>Price</h6>
+                    <h6></h6>
                     <div className="nft-item-price">
-                      <img src={EthImage} alt="" />
+                      <img src="" alt="" />
                       <span>1.85</span>
                     </div>
                   </div>

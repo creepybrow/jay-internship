@@ -1,8 +1,21 @@
-import React from "react";
+import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
+import axios from 'axios';
 
 const TopSellers = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const response = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers');
+        setData(response.data);
+      }catch(error){
+        console.error('Error fetching data', error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <section id="section-popular" className="pb-5">
       <div className="container">
