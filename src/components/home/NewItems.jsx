@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ItemDetails = () => {
   const [data, setData] = useState([]);
@@ -30,7 +31,7 @@ const ItemDetails = () => {
         const response = await axios.get(
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
         );
-        setData(response.data);
+        setData(response.data);  // Here, replace it with the cleaned data when testing locally
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -53,7 +54,7 @@ const ItemDetails = () => {
             };
           }
 
-          return { ...item, remainingTime: "No Expiry" }; // Fallback if no expiry date
+          return { ...item, remainingTime: "Expired" }; // Fallback if no expiry date
         })
       );
     }, 1000);
@@ -72,14 +73,14 @@ const ItemDetails = () => {
       {
         breakpoint: 991,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 767,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -94,50 +95,57 @@ const ItemDetails = () => {
   };
 
   return (
-    <div id="wrapper">
-          <Slider {...settings}>
+    <section id="collections" className="no-bottom">
       <div className="container">
-        <div className="new-items__row">
-          {data && data.length > 0 ? (
-            data.map((item) => (
-              <div className="col-md-6" key={item.id}>
-                <div className="item-info-container">
-                  {/* Author Image */}
-                  <img className="auth-img" src={item.authorImage} alt="author" />
-                  
-                  {/* Countdown Timer */}
-                  <div className="timer">
-                    {item.remainingTime || "Loading..."}
-                  </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="text-center">
+              <h2>Hot Collections</h2>
+              <div className="slider-container">
+                <Slider {...settings}>
+                  {data.map((nft, index) => (
+                    <div key={index} className="px-2">
+                      <div className="nft_coll">
+                        <div className="nft_wrap">
+                          <Link to={`/item-details/${nft.nftId}`}>
+                            <img
+                              src={nft.nftImage}
+                              className="lazy img-fluid"
+                              alt={nft.title}
+                            />
+                          </Link>
+                        </div>
+                        <div className="nft_coll_pp">
+                          <Link to={`/author/${nft.authorId}`}>
+                            <img
+                              className="lazy pp-coll"
+                              src={nft.authorImage}
+                              alt={`${nft.title} author`}
+                            />
+                          </Link>
+                          <i className="fa fa-check"></i>
+                        </div>
+                        <div className="nft_coll_info">
+                          <Link to="/explore">
+                            <h4>{nft.title}</h4>
+                          </Link>
+                          
+                        </div>
 
-                  {/* NFT Image */}
-                  <img src={item.nftImage} alt={item.title} className="nft-img" />
-                  
-                  <div className="item-info--wrapper">
-                    <h2 className="item-title">{item.title}</h2>
-
-                    <div className="item_info_counts">
-                      <p className="item_price">Price: {item.price} ETH</p>
-                      <i className="fa fa-heart"></i> {item.likes}
+                        {/* Display the countdown timer */}
+                        <div className="timer">
+                          {nft.remainingTime || "Loading..."}
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="price-wrapper"></div>
-                  </div>
-
-                  {/* Author Info (optional) */}
-                  <div className="item_author">
-                    {/* <p>Author ID: {item.authorId}</p> */}
-                  </div>
-                </div>
+                  ))}
+                </Slider>
               </div>
-            ))
-          ) : (
-            <p>No items found</p>
-          )}
+            </div>
+          </div>
         </div>
       </div>
-        </Slider>
-    </div>
+    </section>
   );
 };
 
