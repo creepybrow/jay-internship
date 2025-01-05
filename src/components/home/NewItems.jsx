@@ -30,8 +30,10 @@ const ItemDetails = () => {
       try {
         const response = await axios.get(
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
+         
         );
         setData(response.data);  // Here, replace it with the cleaned data when testing locally
+        console.log("fetched Data:", response.data);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -128,6 +130,7 @@ const ItemDetails = () => {
                         <div className="nft_coll_info">
                           <Link to="/explore">
                             <h4>{nft.title}</h4>
+                            <strong>${nft.price}</strong>
                           </Link>
                           
                         </div>
