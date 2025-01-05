@@ -16841,3 +16841,50 @@ slider-container {
   display: flex;
   margin-left: 10%;
 }
+/*item-details page*/
+.img-fluid{
+  height:506px;
+  width:636px;
+}
+.creator-image{
+  height:60px;
+  width:60px;
+  border-radius: 50%;
+}
+.owner-image{
+  height:60px;
+  width:60px;
+  border-radius: 50%;
+}
+.creatorName{
+  font-weight: bold;
+}
+.owner-name{
+  
+}
+.fa-eye{
+  padding:2px 1px 16px;
+  margin: 0px 1px 0px 0px;
+  font-size: 24px;
+}
+.item_info_views{
+  width:50px;
+  height:30px;
+}
+.item_info_counts{
+  width:60px;
+}
+.item_info_like{
+  display: flex;
+  align-items: center;
+  gap:8px;
+  height:30px;
+  width:30px;
+  font-size: 42px;
+}
+.item_info_like i{
+  margin-right: 24px;
+}
+.fa-heart{
+  font-size: 20px;
+}

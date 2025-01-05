@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const TopSellers = () => {
   const [data, setData] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
-      try{
+      try {
         const response = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers');
-        setData(response.data);
-      }catch(error){
+        setData(response.data);  // Assuming response.data is the array of sellers
+      } catch (error) {
         console.error('Error fetching data', error);
       }
     };
     fetchData();
   }, []);
+  
   return (
     <section id="section-popular" className="pb-5">
       <div className="container">
@@ -28,24 +29,29 @@ const TopSellers = () => {
           </div>
           <div className="col-md-12">
             <ol className="author_list">
-              {new Array(12).fill(0).map((_, index) => (
-                <li key={index}>
-                  <div className="author_list_pp">
-                    <Link to="/author">
-                      <img
-                        className="lazy pp-author"
-                        src={AuthorImage}
-                        alt=""
-                      />
-                      <i className="fa fa-check"></i>
-                    </Link>
-                  </div>
-                  <div className="author_list_info">
-                    <Link to="/author">Monica Lucas</Link>
-                    <span>2.1 ETH</span>
-                  </div>
-                </li>
-              ))}
+              {data.length > 0 ? (
+                data.map((item, index) => (
+                  <li key={index}>
+                    <div className="author_list_pp">
+                      {/* Dynamically linking to Author page using item.authorId */}
+                      <Link to={`/author/${item.authorId}`}>
+                        <img
+                          className="lazy pp-author"
+                          src={item.authorImage || "default_image.jpg"} // Use seller's image or a default one
+                          alt={`Profile of ${item.authorName}`}
+                        />
+                        <i className="fa fa-check"></i>
+                      </Link>
+                    </div>
+                    <div className="author_list_info">
+                      <Link to={`/item-details/${item.id}`}>{item.authorName}</Link>
+                      <span>{item.price} ETH</span>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <li>No sellers found</li>
+              )}
             </ol>
           </div>
         </div>
