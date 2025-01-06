@@ -9,6 +9,7 @@ const Author = () => {
   const { authorId } = useParams(); // Get the authorId from the URL
   const [authorDetails, setAuthorDetails] = useState(null);
   const [loading, setLoading] = useState(true);  // Add a loading state to check data fetching
+  const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
     const fetchAuthorDetails = async () => {
@@ -38,6 +39,21 @@ const Author = () => {
   if (!authorDetails) {
     return <div>Author not found</div>;  // Show error if no data is available
   }
+
+  const handleFollowClick = () => {
+    setFollowed(!followed);
+    if(!followed){
+      setAuthorDetails({
+        ...authorDetails,
+        followers: authorDetails.followers + 1,
+      });
+    }else{
+      setAuthorDetails({
+        ...authorDetails,
+        followers: authorDetails.followers -1,
+      });
+    }
+  };
 
   const copyWallet = () => {
     navigator.clipboard.writeText(authorDetails.walletAddress).then(() => {
@@ -83,9 +99,12 @@ const Author = () => {
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
                       <div className="profile_follower">{authorDetails.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <button
+                      onClick={handleFollowClick}
+                      className="btn-main"
+                      >
+                        {followed ? "Unfollow" : "Follow"}
+                      </button>
                     </div>
                   </div>
                 </div>

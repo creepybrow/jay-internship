@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import authorImage from '../../images/author_thumbnail.jpg';
-import nftImage from '../../images/nftImage.jpg'
+import nftImage from '../../images/nftImage.jpg';
 import axios from "axios";
 
-const AuthorItems = ({authorId}) => {
+const AuthorItems = ({ authorId }) => {
   const [nftData, setNftData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,7 +20,6 @@ const AuthorItems = ({authorId}) => {
         );
         console.log(response.data);  
         setNftData(response.data.nftCollection);  
-        
       } catch (error) {
         setError(error.message || "Failed to fetch data");
         console.error("Error fetching NFT data:", error);
@@ -28,7 +27,6 @@ const AuthorItems = ({authorId}) => {
         setLoading(false);
       }
     };
-
 
     fetchNftData();
   }, [authorId]); // Trigger refetch when authorId changes
@@ -40,16 +38,15 @@ const AuthorItems = ({authorId}) => {
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
-          {nftData.length > 0 ? (
+          {nftData && nftData.length > 0 ? (
             nftData.map((nft, index) => (
               <div
                 className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                 key={nft.nftId || index} // Ensure each item has a unique key (using nft.nftId if available)
               >
-                
                 <div className="nft__item">
                   <div className="author_list_pp">
-                    <Link to={`/author/${nft.AuthorId}`}>
+                    <Link to={`/author/${nft.authorId}`}>
                       {/* Dynamically use the author's image or fallback to the default */}
                       <img
                         className="lazy"
@@ -77,7 +74,7 @@ const AuthorItems = ({authorId}) => {
                         </div>
                       </div>
                     </div>
-                    <Link to={`/item-details/${nft.nftId}`}>
+                    <Link to={`/author/${nft.authorId}`}>
                       {/* Use nftImage dynamically from the API response, fallback to the default nftImage */}
                       <img
                         src={nft.nftImage || nftImage}  // Use the nft image or fallback
@@ -87,7 +84,7 @@ const AuthorItems = ({authorId}) => {
                     </Link>
                   </div>
                   <div className="nft__item_info">
-                    <Link to="/item-details">
+                    <Link to={`/item-details/${nft.nftId}`}>
                       <h4>{nft.title || "Default Title"}</h4> {/* Display nft title if available */}
                     </Link>
                     <div className="nft__item_price">{nft.price || "2.52 ETH"}</div> {/* Display price */}

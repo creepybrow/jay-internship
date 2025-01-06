@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import AuthorImage from '../../images/author_thumbnail.jpg'
+import nftImage from '../../images/nftImage.jpg';
 import axios from 'axios';
 
 const TopSellers = () => {
@@ -34,7 +36,7 @@ const TopSellers = () => {
                   <li key={index}>
                     <div className="author_list_pp">
                       {/* Dynamically linking to Author page using item.authorId */}
-                      <Link to={`/author/${item.authorId}`}>
+                      <Link to={`/author/${item.id}`}>
                         <img
                           className="lazy pp-author"
                           src={item.authorImage || "default_image.jpg"} // Use seller's image or a default one
@@ -44,7 +46,7 @@ const TopSellers = () => {
                       </Link>
                     </div>
                     <div className="author_list_info">
-                      <Link to={`/item-details/${item.id}`}>{item.authorName}</Link>
+                      <Link to={`/author/${AuthorImage}`}>{item.authorName}</Link>
                       <span>{item.price} ETH</span>
                     </div>
                   </li>
