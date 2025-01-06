@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 import authorImage from '../../images/author_thumbnail.jpg';
 import nftImage from '../../images/nftImage.jpg'
 import axios from "axios";
 
 const AuthorItems = ({authorId}) => {
-  const {authorId} = useParams();
   const [nftData, setNftData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-
-    if(!authorId){
-      setError("Author ID is missing.");
-      setLoading(true);
-      
-      return;
-    }
-    
     const fetchNftData = async () => {
+      if (!authorId) return; 
+      
       setLoading(true);
       try {
         const response = await axios.get(
           `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
         );
-        console.log(response.data);  // Log the data structure to inspect it
-        setNftData(response.data.nftCollection);  // Assuming nftCollection is the array of NFTs
+        console.log(response.data);  
+        setNftData(response.data.nftCollection);  
         
       } catch (error) {
         setError(error.message || "Failed to fetch data");
@@ -35,6 +28,7 @@ const AuthorItems = ({authorId}) => {
         setLoading(false);
       }
     };
+
 
     fetchNftData();
   }, [authorId]); // Trigger refetch when authorId changes
