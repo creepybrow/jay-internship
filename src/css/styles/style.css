@@ -16889,3 +16889,24 @@ slider-container {
 .fa-heart{
   font-size: 20px;
 }
+/*author page*/
+.author-wrapper{
+display: flex;
+flex-direction: column;
+}
+.author-work__container{
+  display: flex;
+  flex-wrap: wrap;
+  width:calc(25% - 10px);
+  margin:5px;
+  box-sizing: border-box;
+}
+.author-work{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.black{
+  color:black;
+}
+/*style author page*/
