@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import authorImage from '../../images/author_thumbnail.jpg';
+import nftImage from '../../images/nftImage.jpg'
 import axios from "axios";
-import nftImage from '../../images/nftImage.jpg';  // Default image for NFTs
-import authorImage from '../../images/author_thumbnail.jpg';  // Default image for authors
 
 const AuthorItems = () => {
   const [nftData, setNftData] = useState([]);
@@ -15,7 +15,7 @@ const AuthorItems = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${'90432259'}`
         );
         console.log(response.data);  // Log the data structure to inspect it
         setNftData(response.data.nftCollection);  // Assuming nftCollection is the array of NFTs
@@ -47,7 +47,7 @@ const AuthorItems = () => {
                 
                 <div className="nft__item">
                   <div className="author_list_pp">
-                    <Link to="">
+                    <Link to={`/author/${nft.AuthorId}`}>
                       {/* Dynamically use the author's image or fallback to the default */}
                       <img
                         className="lazy"
