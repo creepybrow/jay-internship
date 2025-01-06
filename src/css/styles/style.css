@@ -16859,9 +16859,7 @@ slider-container {
 .creatorName{
   font-weight: bold;
 }
-.owner-name{
-  
-}
+
 .fa-eye{
   padding:2px 1px 16px;
   margin: 0px 1px 0px 0px;
@@ -16881,6 +16879,9 @@ slider-container {
   height:30px;
   width:30px;
   font-size: 42px;
+}
+.fa-heart:before{
+  padding-right: 8px;
 }
 .item_info_like i{
   margin-right: 24px;
