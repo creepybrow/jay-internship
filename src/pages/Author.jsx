@@ -71,7 +71,7 @@ const Author = () => {
                           {authorDetails.authorName}
                           <span className="profile_username">@{authorDetails.username}</span>
                           <span id="wallet" className="profile_wallet">
-                            {authorDetails.walletAddress}
+                            {authorDetails.address}
                           </span>
                           <button id="btn_copy" title="Copy Text" onClick={copyWallet}>
                             Copy

@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import authorImage from '../../images/author_thumbnail.jpg';
 import nftImage from '../../images/nftImage.jpg'
 import axios from "axios";
 
-const AuthorItems = () => {
+const AuthorItems = ({authorId}) => {
+  const {authorId} = useParams();
   const [nftData, setNftData] = useState([]);
-  const [authorId, setAuthorId] = useState("73855012"); // Default authorId, can be dynamic if needed
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    if(!authorId){
+      setError("Author ID is missing.");
+      setLoading(true);
+      
+      return;
+    }
+    
     const fetchNftData = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${'90432259'}`
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
         );
         console.log(response.data);  // Log the data structure to inspect it
         setNftData(response.data.nftCollection);  // Assuming nftCollection is the array of NFTs
@@ -75,7 +83,7 @@ const AuthorItems = () => {
                         </div>
                       </div>
                     </div>
-                    <Link to="/item-details">
+                    <Link to={`/item-details/${nft.nftId}`}>
                       {/* Use nftImage dynamically from the API response, fallback to the default nftImage */}
                       <img
                         src={nft.nftImage || nftImage}  // Use the nft image or fallback
