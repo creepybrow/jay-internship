@@ -33,20 +33,20 @@ const Landing = () => {
   }, []);
 
   // Calculate background size and position dynamically
-  let backgroundSize = "140%"; // Default background size for larger screens
+  let backgroundSize = "200%"; // Default background size for larger screens
   let backgroundPosition = "center center"; // Default position
 
   if (windowWidth <= 768) {
     backgroundSize = "200%"; // Adjust background size for small screens (mobile)
     backgroundPosition = "center center"; // Keep it centered for mobile
   } else if (windowWidth <= 1240) {
-    backgroundSize = "140%"; // Adjust for tablets (between 576px and 768px)
+    backgroundSize = "200%"; // Adjust for tablets (between 576px and 768px)
     backgroundPosition = "center top"; // Slightly adjust position for tablets
   } else if (windowWidth <= 1500) {
-    backgroundSize = "140%"; // Slightly larger for tablets and medium screens
+    backgroundSize = "250%"; // Slightly larger for tablets and medium screens
     backgroundPosition = "center center"; // Keep it centered
   }else if(windowWidth <=1600){
-    backgroundSize = "200%";
+    backgroundSize = "250%";
     backgroundPosition = "center center";
   }
    else {
@@ -58,7 +58,7 @@ const Landing = () => {
     <section
       id="section-hero"
       aria-label="section"
-      className="no-top no-bottom vh-100"
+      className=" no-top no-bottom vh-100"
       style={{
         background: `url(${backgroundImage}) bottom / cover`,
         backgroundSize: backgroundSize,
