@@ -27,10 +27,10 @@ const HotCollections = () => {
 
    useEffect(() => {
       AOS.init({
-        duration: 1000, // Animation duration
-        easing: "ease-in-out", // Easing function
-        once: true, // Animation happens only once
-        mirror: false, // Disable mirror effect
+        duration: 1000, 
+        easing: "ease-in-out", 
+        once: true, 
+        mirror: false, 
       });
     }, []);
   

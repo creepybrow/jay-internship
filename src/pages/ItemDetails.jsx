@@ -115,7 +115,7 @@ const ItemDetails = () => {
         <section aria-label="section" className="mt90 sm-mt-0">
           <div className="container">
             <div className="row">
-              {/* NFT Image */}
+           
               <div className="col-md-6 text-center">
                 <img
                   src={itemDetails.nftImage || nftImage}
@@ -126,10 +126,10 @@ const ItemDetails = () => {
 
               <div className="col-md-4">
                 <div className="item_info">
-                  {/* Title */}
+                  
                   <h2>{itemDetails.title || "NFT Item"}</h2>
 
-                  {/* Views and Likes */}
+                  
                   <div className="item_info_counts">
                     <div className="item_info_views">
                       <i className="fa fa-eye">{itemDetails.views || 0} </i>
@@ -139,16 +139,16 @@ const ItemDetails = () => {
                     </div>
                   </div>
 
-                  {/* Description */}
+                 
                   <p>{itemDetails.description || "No description available"}</p>
 
-                  {/* Price */}
+                 
                   <div className="nft-item-price">
                     <img src={EthImage} alt="Ethereum" />
                     <span>{itemDetails.price || "0.00"} ETH</span>
                   </div>
 
-                  {/* Owner Info */}
+                  
                   <div className="owner-info">
                     <h3>Owner</h3>
                     <img
@@ -159,7 +159,7 @@ const ItemDetails = () => {
                     <p>{itemDetails.ownerName || "Unknown"}</p>
                   </div>
 
-                  {/* Creator Info */}
+                 
                   <div className="creator-info">
                     <h3>Creator</h3>
                     <img

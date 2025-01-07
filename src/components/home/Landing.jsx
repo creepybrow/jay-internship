@@ -64,7 +64,7 @@ const Landing = () => {
         backgroundSize: backgroundSize,
         backgroundPosition: backgroundPosition,
         backgroundRepeat: "no-repeat",
-        transition: "background-size 0.5s ease-out, background-position 0.5s ease-out", // Optional transition for smooth resizing
+        transition: "background-size 0.5s ease-out, background-position 0.5s ease-out", 
       }}
     >
       <div className="v-center">
