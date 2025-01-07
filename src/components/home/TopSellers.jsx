@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AuthorImage from '../../images/author_thumbnail.jpg'
-import nftImage from '../../images/nftImage.jpg';
+import nft from '../../images/nftImage.jpg';
 import axios from 'axios';
 
 const TopSellers = () => {
@@ -12,6 +11,7 @@ const TopSellers = () => {
       try {
         const response = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers');
         setData(response.data);  // Assuming response.data is the array of sellers
+        console.log(response);
       } catch (error) {
         console.error('Error fetching data', error);
       }
@@ -35,8 +35,8 @@ const TopSellers = () => {
                 data.map((item, index) => (
                   <li key={index}>
                     <div className="author_list_pp">
-                      {/* Dynamically linking to Author page using item.authorId */}
-                      <Link to={`/author/${item.id}`}>
+                      {/* Dynamically linking to Item Details page using item.nftId */}
+                      <Link to={`/author/${item.authorId}`}>
                         <img
                           className="lazy pp-author"
                           src={item.authorImage || "default_image.jpg"} // Use seller's image or a default one
@@ -46,7 +46,9 @@ const TopSellers = () => {
                       </Link>
                     </div>
                     <div className="author_list_info">
-                      <Link to={`/author/${AuthorImage}`}>{item.authorName}</Link>
+                      {/* Link to Author page using item.id */}
+                      <Link to={`/author/${item.authorId}`}>
+                      {item.authorName || 'Unknown Author'}</Link>
                       <span>{item.price} ETH</span>
                     </div>
                   </li>

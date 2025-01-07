@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {useParams} from 'react-router-dom';
 import authorImage from '../../images/author_thumbnail.jpg';
 import nftImage from '../../images/nftImage.jpg';
 import axios from "axios";
 
-const AuthorItems = ({ authorId }) => {
+const AuthorItems = ({authorId}) => {
+  
   const [nftData, setNftData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -46,7 +48,7 @@ const AuthorItems = ({ authorId }) => {
               >
                 <div className="nft__item">
                   <div className="author_list_pp">
-                    <Link to={`/author/${nft.authorId}`}>
+                    <Link to={`/item-details/${nft.itemDetails}`}>
                       {/* Dynamically use the author's image or fallback to the default */}
                       <img
                         className="lazy"
@@ -80,6 +82,7 @@ const AuthorItems = ({ authorId }) => {
                         src={nft.nftImage || nftImage}  // Use the nft image or fallback
                         className="lazy nft__item_preview"
                         alt="NFT Preview"
+                        loading="lazy"
                       />
                     </Link>
                   </div>

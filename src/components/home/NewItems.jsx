@@ -30,9 +30,8 @@ const ItemDetails = () => {
       try {
         const response = await axios.get(
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
-         
         );
-        setData(response.data);  // Here, replace it with the cleaned data when testing locally
+        setData(response.data);
         console.log("fetched Data:", response.data);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -48,7 +47,6 @@ const ItemDetails = () => {
         prevData.map((item) => {
           let expirationDate = item.expiryDate;
 
-          // If expiryDate is valid, calculate the remaining time
           if (expirationDate) {
             return {
               ...item,
@@ -56,7 +54,7 @@ const ItemDetails = () => {
             };
           }
 
-          return { ...item, remainingTime: "Expired" }; // Fallback if no expiry date
+          return { ...item, remainingTime: "Expired" };
         })
       );
     }, 1000);
@@ -109,6 +107,7 @@ const ItemDetails = () => {
                     <div key={index} className="px-2">
                       <div className="nft_coll">
                         <div className="nft_wrap">
+                          {/* Link to the item details page of the NFT */}
                           <Link to={`/item-details/${nft.nftId}`}>
                             <img
                               src={nft.nftImage}
@@ -118,6 +117,7 @@ const ItemDetails = () => {
                           </Link>
                         </div>
                         <div className="nft_coll_pp">
+                          {/* Link to the author's profile page */}
                           <Link to={`/author/${nft.authorId}`}>
                             <img
                               className="lazy pp-coll"
@@ -132,12 +132,16 @@ const ItemDetails = () => {
                             <h4>{nft.title}</h4>
                             <strong>${nft.price}</strong>
                           </Link>
-                          
                         </div>
 
                         {/* Display the countdown timer */}
                         <div className="timer">
                           {nft.remainingTime || "Loading..."}
+                        </div>
+
+                        {/* Display the number of likes */}
+                        <div className="likes">
+                          <i className="fa fa-heart"></i> {nft.likes} Likes
                         </div>
                       </div>
                     </div>
