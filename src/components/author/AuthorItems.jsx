@@ -48,11 +48,11 @@ const AuthorItems = ({authorId}) => {
               >
                 <div className="nft__item">
                   <div className="author_list_pp">
-                    <Link to={`/item-details/${nft.itemDetails}`}>
+                    <Link to={`/item-details/${nft.nftId}`}>
                       {/* Dynamically use the author's image or fallback to the default */}
                       <img
                         className="lazy"
-                        src={nft.authorImage || authorImage} // Use author's image or fallback
+                        src={nft.authorImage || authorImage} // this is the image for the checkmark spot
                         alt="Author"
                       />
                       <i className="fa fa-check"></i>
@@ -76,10 +76,10 @@ const AuthorItems = ({authorId}) => {
                         </div>
                       </div>
                     </div>
-                    <Link to={`/author/${nft.authorId}`}>
+                    <Link to={`/item-details/${nft.nftId}`}>
                       {/* Use nftImage dynamically from the API response, fallback to the default nftImage */}
                       <img
-                        src={nft.nftImage || nftImage}  // Use the nft image or fallback
+                        src={nft.nftImage || nftImage}  // Use the nft image or fallback for the author image in the check mark
                         className="lazy nft__item_preview"
                         alt="NFT Preview"
                         loading="lazy"
