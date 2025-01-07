@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ItemDetails = () => {
   const [data, setData] = useState([]);
@@ -39,6 +41,16 @@ const ItemDetails = () => {
     };
     fetchData();
   }, []);
+
+    useEffect(() => {
+        AOS.init({
+          duration: 1000, // Animation duration
+          easing: "ease-in-out", // Easing function
+          once: true, // Animation happens only once
+          mirror: false, // Disable mirror effect
+        });
+      }, []);
+  
 
   // Timer update for the countdown
   useEffect(() => {
@@ -95,7 +107,7 @@ const ItemDetails = () => {
   };
 
   return (
-    <section id="collections" className="no-bottom">
+    <section id="collections" data-aos="fade-up" className="no-bottom">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

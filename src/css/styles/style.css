@@ -16910,3 +16910,13 @@ flex-direction: column;
   color:black;
 }
 /*style author page*/
+
+/*AOS ANIMATION*/
+#section-hero{
+  background-size: 120%;
+  background-position: center center;
+  transition:background-size 1s ease-in-out;
+}
+#section-hero.aos-animate{
+  background-size:100%;
+}

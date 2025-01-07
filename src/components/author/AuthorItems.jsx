@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {useParams} from 'react-router-dom';
-import authorImage from '../../images/author_thumbnail.jpg';
-import nftImage from '../../images/nftImage.jpg';
 import axios from "axios";
 
-const AuthorItems = ({authorId}) => {
-  
+const AuthorItems = ({ authorId }) => {
   const [nftData, setNftData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [clickedNftId, setClickedNftId] = useState(null);
+  const [authorInfo, setAuthorInfo] = useState(null);
 
   useEffect(() => {
     const fetchNftData = async () => {
-      if (!authorId) return; 
-      
+      if (!authorId) return;
+
       setLoading(true);
       try {
         const response = await axios.get(
           `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
         );
-        console.log(response.data);  
-        setNftData(response.data.nftCollection);  
+        console.log(response.data);
+        
+        // Assuming the response contains 'author' and 'nftCollection' fields
+        setNftData(response.data.nftCollection);
+        setAuthorInfo(response.data); // Save author details in the state
       } catch (error) {
         setError(error.message || "Failed to fetch data");
         console.error("Error fetching NFT data:", error);
@@ -31,7 +32,15 @@ const AuthorItems = ({authorId}) => {
     };
 
     fetchNftData();
-  }, [authorId]); // Trigger refetch when authorId changes
+  }, [authorId]);
+
+  const handleNftClick = (nftId) => {
+    if (clickedNftId === nftId) {
+      setClickedNftId(null);
+    } else {
+      setClickedNftId(nftId);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -44,15 +53,18 @@ const AuthorItems = ({authorId}) => {
             nftData.map((nft, index) => (
               <div
                 className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                key={nft.nftId || index} // Ensure each item has a unique key (using nft.nftId if available)
+                key={nft.nftId || index}
               >
                 <div className="nft__item">
                   <div className="author_list_pp">
-                    <Link to={`/item-details/${nft.nftId}`}>
-                      {/* Dynamically use the author's image or fallback to the default */}
+                    <Link
+                      to={`/item-details/${nft.nftId}`}
+                      onClick={() => handleNftClick(nft.nftId)}
+                    >
+                      {/* Dynamically use the author's image */}
                       <img
                         className="lazy"
-                        src={nft.authorImage || authorImage} // this is the image for the checkmark spot
+                        src={authorInfo ? authorInfo.authorImage : 'fallback-image.jpg'} // Use author's image or fallback
                         alt="Author"
                       />
                       <i className="fa fa-check"></i>
@@ -76,10 +88,10 @@ const AuthorItems = ({authorId}) => {
                         </div>
                       </div>
                     </div>
-                    <Link to={`/item-details/${nft.nftId}`}>
-                      {/* Use nftImage dynamically from the API response, fallback to the default nftImage */}
+                    <Link to={`/item-details/${nft.nftId}`} onClick={() => handleNftClick(nft.nftId)}>
+                      {/* Use nftImage dynamically from the API response */}
                       <img
-                        src={nft.nftImage || nftImage}  // Use the nft image or fallback for the author image in the check mark
+                        src={nft.nftImage || 'default-nft-image.jpg'}  // Use the nft image or fallback
                         className="lazy nft__item_preview"
                         alt="NFT Preview"
                         loading="lazy"
@@ -88,12 +100,12 @@ const AuthorItems = ({authorId}) => {
                   </div>
                   <div className="nft__item_info">
                     <Link to={`/item-details/${nft.nftId}`}>
-                      <h4>{nft.title || "Default Title"}</h4> {/* Display nft title if available */}
+                      <h4>{nft.title || "Default Title"}</h4>
                     </Link>
-                    <div className="nft__item_price">{nft.price || "2.52 ETH"}</div> {/* Display price */}
+                    <div className="nft__item_price">{nft.price || "2.52 ETH"}</div>
                     <div className="nft__item_like">
                       <i className="fa fa-heart"></i>
-                      <span>{nft.likes || 97}</span> {/* Display number of likes */}
+                      <span>{nft.likes || 97}</span>
                     </div>
                   </div>
                 </div>

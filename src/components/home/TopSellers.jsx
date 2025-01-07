@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import nft from '../../images/nftImage.jpg';
 import axios from 'axios';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const TopSellers = () => {
   const [data, setData] = useState([]);
@@ -18,9 +20,18 @@ const TopSellers = () => {
     };
     fetchData();
   }, []);
+
+   useEffect(() => {
+          AOS.init({
+            duration: 1000, // Animation duration
+            easing: "ease-in-out", // Easing function
+            once: true, // Animation happens only once
+            mirror: false, // Disable mirror effect
+          });
+        }, []);
   
   return (
-    <section id="section-popular" className="pb-5">
+    <section id="section-popular" data-aos="fade-up"className="pb-5">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

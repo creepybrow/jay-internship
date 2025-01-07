@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import Slider from "react-slick";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const HotCollections = () => {
   const [data, setData] = useState([]);
@@ -22,6 +24,16 @@ const HotCollections = () => {
     };
     fetchData();
   }, []);
+
+   useEffect(() => {
+      AOS.init({
+        duration: 1000, // Animation duration
+        easing: "ease-in-out", // Easing function
+        once: true, // Animation happens only once
+        mirror: false, // Disable mirror effect
+      });
+    }, []);
+  
 
   const settings = {
     dots: false,
@@ -56,7 +68,7 @@ const HotCollections = () => {
   };
 
   return (
-    <section id="collections" className="no-bottom">
+    <section id="collections" data-aos="fade-up"className="no-bottom">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
