@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NFT from "../../images/nft.png";
-import backgroundImage from "../../images/bg-shape-1.jpg";
+import backgroundImage from "../../images/bg-shape-1.jpg"; // Default background image
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Landing = () => {
+  // State to hold screen width
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Initialize AOS for animations
   useEffect(() => {
@@ -15,7 +17,42 @@ const Landing = () => {
       once: true, // Animation happens only once
       mirror: false, // Disable mirror effect
     });
+
+    // Event listener to handle window resize
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Add resize event listener
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
+  // Calculate background size and position dynamically
+  let backgroundSize = "140%"; // Default background size for larger screens
+  let backgroundPosition = "center center"; // Default position
+
+  if (windowWidth <= 768) {
+    backgroundSize = "200%"; // Adjust background size for small screens (mobile)
+    backgroundPosition = "center center"; // Keep it centered for mobile
+  } else if (windowWidth <= 1240) {
+    backgroundSize = "140%"; // Adjust for tablets (between 576px and 768px)
+    backgroundPosition = "center top"; // Slightly adjust position for tablets
+  } else if (windowWidth <= 1500) {
+    backgroundSize = "140%"; // Slightly larger for tablets and medium screens
+    backgroundPosition = "center center"; // Keep it centered
+  }else if(windowWidth <=1600){
+    backgroundSize = "200%";
+    backgroundPosition = "center center";
+  }
+   else {
+    backgroundSize = "200%"; // For large screens, background zooms in
+    backgroundPosition = "center center"; // Center the image on larger screens
+  }
 
   return (
     <section
@@ -24,8 +61,10 @@ const Landing = () => {
       className="no-top no-bottom vh-100"
       style={{
         background: `url(${backgroundImage}) bottom / cover`,
-        backgroundSize: "120%",
-        transition: "background-size 0.5s ease-out", // Optional background zoom
+        backgroundSize: backgroundSize,
+        backgroundPosition: backgroundPosition,
+        backgroundRepeat: "no-repeat",
+        transition: "background-size 0.5s ease-out, background-position 0.5s ease-out", // Optional transition for smooth resizing
       }}
     >
       <div className="v-center">
@@ -62,6 +101,33 @@ const Landing = () => {
           </div>
         </div>
       </div>
+      <style>{`
+        /* Media Query for Tablets */
+        @media (max-width: 992px) {
+          #section-hero {
+            background-size: cover !important; /* Adjust background for tablets */
+            background-position: center center;
+          }
+        }
+
+        /* Media Query for Small Devices */
+        @media (max-width: 768px) {
+          #section-hero {
+            background-size: cover !important;
+            background-position: center center;
+          }
+        }
+
+        /* Media Query for Large Screens */
+        @media (min-width: 1600px) {
+          #section-hero {
+            background-size: cover !important; /* Ensure full coverage on large screens */
+            background-position: center center;
+          }
+        }
+      `}</style>
+
+
     </section>
   );
 };
